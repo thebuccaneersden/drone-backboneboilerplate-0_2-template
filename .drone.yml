@@ -55,6 +55,7 @@ pipeline:
       - bower install -q --no-color --allow-root
       # Now build the app
       - grunt
+      - sleep 160
 
   rebuild-npm-cache:
     image: foo/drone-volume-cache
