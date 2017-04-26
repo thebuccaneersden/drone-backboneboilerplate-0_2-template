@@ -9,9 +9,16 @@ pipeline:
       - /drone/.npm
     volumes:
       - /tmp/drone-volume-cache/npm:/cache
-    #  - /tmp/drone-volume-cache/npm-cache:/cache
-    #  - /tmp/foo/npm:/cache
 
+  restore-yarn-cache:
+    image: foo/drone-volume-cache
+    restore: true
+    mount:
+      - /drone/.yarn
+    volumes:
+      - /tmp/drone-volume-cache/yarn:/cache
+
+~/.cache/yarn/
   clone:
     image: armswarmdrone/git
 
@@ -31,7 +38,14 @@ pipeline:
         if [ ! -d "/drone/.npm/node_modules/" ]; then
           mkdir /drone/.npm/node_modules;
         fi
+        if [ ! -d "/drone/.yarn/" ]; then
+          mkdir /drone/.yarn;
+        fi
+        if [ ! -d "/drone/.yarn/cache/" ]; then
+          mkdir /drone/.yarn/cache;
+        fi
       - npm config set cache /drone/.npm/cache
+      - yarn config set cache-folder /drone/.yarn/cache
       - ln -s /drone/.npm/node_modules ./
       ###
       # - npm config set loglevel warn
@@ -54,8 +68,14 @@ pipeline:
       - /drone/.npm
     volumes:
       - /tmp/drone-volume-cache/npm:/cache
-    #  - /tmp/drone-volume-cache/npm-cache:/cache
-    #  - /tmp/foo/npm:/cache
+
+  rebuild-npm-cache:
+    image: foo/drone-volume-cache
+    rebuild: true
+    mount:
+      - /drone/.yarn
+    volumes:
+      - /tmp/drone-volume-cache/yarn:/cache
 
 
   ###
