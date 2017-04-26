@@ -8,8 +8,9 @@ pipeline:
     mount:
       - /drone/.npm
     volumes:
+      - /tmp/drone-volume-cache/npm:/cache
     #  - /tmp/drone-volume-cache/npm-cache:/cache
-      - /tmp/foo/npm:/cache
+    #  - /tmp/foo/npm:/cache
 
   clone:
     image: armswarmdrone/git
@@ -43,8 +44,9 @@ pipeline:
     mount:
       - /drone/.npm
     volumes:
+      - /tmp/drone-volume-cache/npm:/cache
     #  - /tmp/drone-volume-cache/npm-cache:/cache
-      - /tmp/foo/npm:/cache
+    #  - /tmp/foo/npm:/cache
 
 
   ###
