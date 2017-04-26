@@ -48,9 +48,12 @@ pipeline:
       - ln -s /drone/.yarn/node_modules ./
       - ln -s /drone/.bower/vendor ./
       ###
+      - apt-get update
+      - apt-get install phantomjs
       - yarn global add grunt-cli --prefix /usr/local
       - yarn global add bower --prefix /usr/local
       - yarn global add coveralls --prefix /usr/local
+      - yarn global add casperjs --prefix /usr/local
       - yarn install --ignore-engines
       - bower install -q --no-color --allow-root
       # Now build the app
