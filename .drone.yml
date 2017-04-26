@@ -42,6 +42,7 @@ pipeline:
       - yarn global add bower --prefix /usr/local
       - yarn global add coveralls --prefix /usr/local
       - yarn install --ignore-engines
+      - bower install
       # Now build the app
       - grunt
 

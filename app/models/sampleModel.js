@@ -14,9 +14,9 @@ define(function (require) {
 
 		// If you want to so some manipulation of the urlRoot before making the request
 		// urlRoot: function() {
-		// 	var url = "/sample/";
-		// 	url = URI( url ).addSearch( 'query', '1' ).toString();
-		// 	return url;
+		// var url = "/sample/";
+		// url = URI( url ).addSearch( 'query', '1' ).toString();
+		// return url;
 		// },
 
 		defaults: {
