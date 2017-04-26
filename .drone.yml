@@ -25,18 +25,10 @@ pipeline:
     image: thebuccaneersden/rpi-node
     commands:
       ###
-      # The following 2 commands ensure that npm caches its stuff in a common
-      # area so it can be cached by the `drone-volume-cache` plugin.
+      # The following 2 commands ensure that yarn & bower caches its stuff
+      # in a common area so it can be cached by the `drone-volume-cache`
+      # plugin.
       - |
-        # if [ ! -d "/drone/.npm/" ]; then
-        #   mkdir /drone/.npm;
-        # fi
-        # if [ ! -d "/drone/.npm/cache/" ]; then
-        #   mkdir /drone/.npm/cache;
-        # fi
-        # if [ ! -d "/drone/.npm/node_modules/" ]; then
-        #   mkdir /drone/.npm/node_modules;
-        # fi
         if [ ! -d "/drone/.yarn/" ]; then
           mkdir /drone/.yarn;
         fi
@@ -52,16 +44,10 @@ pipeline:
         if [ ! -d "/drone/.bower/vendor" ]; then
           mkdir /drone/.bower/vendor;
         fi
-      # - npm config set cache /drone/.npm/cache
       - yarn config set cache-folder /drone/.yarn/cache
-      # - ln -s /drone/.npm/node_modules ./
       - ln -s /drone/.yarn/node_modules ./
       - ln -s /drone/.bower/vendor ./
       ###
-      # - npm config set loglevel warn
-      # - npm i -gq grunt-cli bower coveralls casperjs phantomjs
-      # - npm i -gq grunt-cli bower coveralls
-      # - npm install
       - yarn global add grunt-cli --prefix /usr/local
       - yarn global add bower --prefix /usr/local
       - yarn global add coveralls --prefix /usr/local
@@ -69,7 +55,6 @@ pipeline:
       - bower install -q --no-color --allow-root
       # Now build the app
       - grunt
-      # - sleep 300
 
   rebuild-npm-cache:
     image: foo/drone-volume-cache
