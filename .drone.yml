@@ -18,7 +18,6 @@ pipeline:
     volumes:
       - /tmp/drone-volume-cache/yarn:/cache
 
-~/.cache/yarn/
   clone:
     image: armswarmdrone/git
 
@@ -76,7 +75,6 @@ pipeline:
       - /drone/.yarn
     volumes:
       - /tmp/drone-volume-cache/yarn:/cache
-
 
   ###
   # DEPLOYMENT STEP - fill in the details when set up
