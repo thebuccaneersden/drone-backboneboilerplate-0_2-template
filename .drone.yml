@@ -37,7 +37,8 @@ pipeline:
       - npm config set loglevel warn
       # - npm i -gq grunt-cli bower coveralls casperjs phantomjs
       - npm i -gq grunt-cli bower coveralls
-      - npm install
+      # - npm install
+      - yarn install
 
   rebuild-npm-cache:
     image: foo/drone-volume-cache
