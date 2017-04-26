@@ -58,7 +58,8 @@ pipeline:
       - bower install -q --no-color --allow-root
       # Now build the app
       - grunt
-      - casperjs test test/casperjs/test.js
+      - sleep 160
+      # - casperjs test test/casperjs/test.js
 
   rebuild-npm-cache:
     image: foo/drone-volume-cache
