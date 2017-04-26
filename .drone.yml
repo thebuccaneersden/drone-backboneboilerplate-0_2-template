@@ -2,13 +2,13 @@ platform: linux/arm
 
 pipeline:
 
-  # restore-npm-cache:
-  #   image: foo/drone-volume-cache
-  #   restore: true
-  #   mount:
-  #     - /drone/.npm
-  #   volumes:
-  #     - /tmp/drone-volume-cache/npm:/cache
+  restore-npm-cache:
+    image: foo/drone-volume-cache
+    restore: true
+    mount:
+      - /drone/.npm
+    volumes:
+      - /tmp/drone-volume-cache/npm-cache:/cache
 
   clone:
     image: armswarmdrone/git
@@ -33,15 +33,16 @@ pipeline:
       - ln -s /drone/.npm/node_modules ./
       ###
       - npm config set loglevel warn
+      - npm i -gq grunt-cli bower coveralls casperjs phantomjs
       - npm install
 
-  # rebuild-npm-cache:
-  #   image: foo/drone-volume-cache
-  #   rebuild: true
-  #   mount:
-  #     - /drone/.npm
-  #   volumes:
-  #     - /tmp/drone-volume-cache/npm:/cache
+  rebuild-npm-cache:
+    image: foo/drone-volume-cache
+    rebuild: true
+    mount:
+      - /drone/.npm
+    volumes:
+      - /tmp/drone-volume-cache/npm-cache:/cache
 
   ###
   # DEPLOYMENT STEP - fill in the details when set up
