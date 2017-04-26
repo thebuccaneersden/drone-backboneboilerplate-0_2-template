@@ -2,14 +2,6 @@ platform: linux/arm
 
 pipeline:
 
-  restore-npm-cache:
-    image: foo/drone-volume-cache
-    restore: true
-    mount:
-      - /drone/.npm
-    volumes:
-      - /tmp/drone-volume-cache/npm:/cache
-
   restore-yarn-cache:
     image: foo/drone-volume-cache
     restore: true
@@ -17,6 +9,14 @@ pipeline:
       - /drone/.yarn
     volumes:
       - /tmp/drone-volume-cache/yarn:/cache
+
+  restore-bower-cache:
+    image: foo/drone-volume-cache
+    restore: true
+    mount:
+      - /drone/.bower
+    volumes:
+      - /tmp/drone-volume-cache/bower:/cache
 
   clone:
     image: armswarmdrone/git
@@ -28,24 +28,35 @@ pipeline:
       # The following 2 commands ensure that npm caches its stuff in a common
       # area so it can be cached by the `drone-volume-cache` plugin.
       - |
-        if [ ! -d "/drone/.npm/" ]; then
-          mkdir /drone/.npm;
-        fi
-        if [ ! -d "/drone/.npm/cache/" ]; then
-          mkdir /drone/.npm/cache;
-        fi
-        if [ ! -d "/drone/.npm/node_modules/" ]; then
-          mkdir /drone/.npm/node_modules;
-        fi
+        # if [ ! -d "/drone/.npm/" ]; then
+        #   mkdir /drone/.npm;
+        # fi
+        # if [ ! -d "/drone/.npm/cache/" ]; then
+        #   mkdir /drone/.npm/cache;
+        # fi
+        # if [ ! -d "/drone/.npm/node_modules/" ]; then
+        #   mkdir /drone/.npm/node_modules;
+        # fi
         if [ ! -d "/drone/.yarn/" ]; then
           mkdir /drone/.yarn;
         fi
         if [ ! -d "/drone/.yarn/cache/" ]; then
           mkdir /drone/.yarn/cache;
         fi
-      - npm config set cache /drone/.npm/cache
+        if [ ! -d "/drone/.yarn/node_modules/" ]; then
+          mkdir /drone/.yarn/node_modules;
+        fi
+        if [ ! -d "/drone/.bower/" ]; then
+          mkdir /drone/.bower;
+        fi
+        if [ ! -d "/drone/.bower/vendor" ]; then
+          mkdir /drone/.bower/vendor;
+        fi
+      # - npm config set cache /drone/.npm/cache
       - yarn config set cache-folder /drone/.yarn/cache
-      - ln -s /drone/.npm/node_modules ./
+      # - ln -s /drone/.npm/node_modules ./
+      - ln -s /drone/.yarn/node_modules ./
+      - ln -s /drone/.bower/vendor ./
       ###
       # - npm config set loglevel warn
       # - npm i -gq grunt-cli bower coveralls casperjs phantomjs
@@ -64,17 +75,17 @@ pipeline:
     image: foo/drone-volume-cache
     rebuild: true
     mount:
-      - /drone/.npm
-    volumes:
-      - /tmp/drone-volume-cache/npm:/cache
-
-  rebuild-npm-cache:
-    image: foo/drone-volume-cache
-    rebuild: true
-    mount:
       - /drone/.yarn
     volumes:
       - /tmp/drone-volume-cache/yarn:/cache
+
+  rebuild-bower-cache:
+    image: foo/drone-volume-cache
+    rebuild: true
+    mount:
+      - /drone/.bower
+    volumes:
+      - /tmp/drone-volume-cache/bower:/cache
 
   ###
   # DEPLOYMENT STEP - fill in the details when set up
