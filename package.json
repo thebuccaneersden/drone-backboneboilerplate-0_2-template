@@ -1,0 +1,37 @@
+{
+    "name": "drone-bbb-0_2-project-template",
+    "version": "1.0.0",
+
+    "devDependencies": {
+        "bbb": "~0.2.0",
+        "grunt": "~0.4.1",
+        "karma": "~0.12.0",
+        "grunt-contrib-clean": "~0.5.0",
+        "grunt-contrib-compress": "~0.5.2",
+        "grunt-contrib-copy": "~0.4.1",
+        "grunt-contrib-cssmin": "~0.6.1",
+        "grunt-contrib-jshint": "~0.6.0",
+        "grunt-contrib-uglify": "~0.4.0",
+        "grunt-karma": "~0.8.0",
+        "grunt-karma-coveralls": "~2.0.2",
+        "grunt-processhtml": "~0.2.0",
+        "karma-coverage": "~0.1.0",
+        "karma-jasmine": "~0.1.0",
+        "karma-mocha": "~0.1.0",
+        "karma-phantomjs-launcher": "~0.1.0",
+        "karma-qunit": "~0.1.0",
+        "grunt-bbb-server": "*",
+        "grunt-bbb-requirejs": "*",
+        "grunt-bbb-styles": "*"
+    },
+    "peerDependencies": {
+        "generator-bbb": "*",
+        "bower": "*",
+        "grunt-cli": "*",
+        "coveralls": "*"
+    },
+    "scripts": {
+        "test": "grunt test coveralls",
+        "test-karma": "grunt karma:run coveralls"
+    }
+}

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Backbone Boilerplate</title>
+
+    <!-- Application styles. -->
+    <!-- build:[href] /styles.min.css -->
+    <link rel="stylesheet" href="/app/styles/index.css">
+    <!-- /build -->
+
+    <script type="text/javascript">
+        <!--
+        // Commented for now...
+        //
+        // cachebustValue = '%-cachebustValue-%';
+        // if( cachebustValue === '%'+'-cachebustValue-'+'%' ) {
+        //   cachebustValue = ( !Date.now ) ? Date().getTime() : Date.now();
+        // }
+        -->
+    </script>
+
+</head>
+
+<body>
+    <!-- Application container. -->
+    <main role="main" id="main" onload="consoleLogShim"></main>
+
+    <!-- Application source. -->
+    <!-- build:[src] /source.min.js -->
+    <script data-main="/app/main" src="/vendor/bower/requirejs/require.js"></script>
+    <!-- /build -->
+
+  <script>
+    //
+    window.inDevMode = true;
+    // While in DEV MODE, you can set the host to something other than relative
+    // to the domain SR-WallFront is served by. This is useful for debugging.
+    window.devModeHost = '';
+    //window.devModeHost = window.location.protocol + '//wall.superrewards.com';
+    // Shim this, for backwards compatibility with browsers that don't support console.log
+    window.disableConsole = false;
+    window.fakeConsole = false;
+    if( typeof console === "undefined" || typeof console.log === "undefined" ) {
+      window.fakeConsole = true;
+      console = {};
+      //console.log = function() {};
+      console.log = function(msg) {
+        // For browsers that don't support console.log, inject a textarea
+        // where console.log outputs will happen
+        var el = document.getElementById( 'fake-console' );
+        if( el !== null ) {
+          el.innerHTML = el.innerHTML + "&#35; " + msg + "<br />";
+          el.scrollTop = el.scrollHeight;
+        }
+      }
+    }
+    if( window.disableConsole ) {
+      console = {};
+      console.log = function() {}
+      console.dir = function() {}
+      console.info = function() {}
+      console.warn = function() {}
+      console.error = function() {}
+      console.debug = function() {}
+      console.trace = function() {}
+      console.time = function() {}
+      console.timeEnd = function() {}
+    }
+  </script>
+
+</body>
+
+</html>
