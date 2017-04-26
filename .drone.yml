@@ -42,9 +42,10 @@ pipeline:
       - yarn global add bower --prefix /usr/local
       - yarn global add coveralls --prefix /usr/local
       - yarn install --ignore-engines
-      - bower install --allow-root
+      - bower install -q --no-color --allow-root
       # Now build the app
       - grunt
+      - sleep 2000
 
   rebuild-npm-cache:
     image: foo/drone-volume-cache
