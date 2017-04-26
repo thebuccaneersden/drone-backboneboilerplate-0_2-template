@@ -1,0 +1,52 @@
+platform: linux/arm
+
+pipeline:
+
+  restore-npm-cache:
+    image: foo/drone-volume-cache
+    restore: true
+    mount:
+      - /drone/.npm
+    volumes:
+      - /tmp/drone-volume-cache/npm:/cache
+
+  clone:
+    image: armswarmdrone/git
+
+  build-node:
+    image: thebuccaneersden/rpi-node
+    commands:
+      ###
+      # The following 2 commands ensure that npm caches its stuff in a common
+      # area so it can be cached by the `drone-volume-cache` plugin.
+      - |
+        if [ ! -d "/drone/.npm/" ]; then
+          mkdir /drone/.npm;
+        fi
+        if [ ! -d "/drone/.npm/cache/" ]; then
+          mkdir /drone/.npm/cache;
+        fi
+        if [ ! -d "/drone/.npm/node_modules/" ]; then
+          mkdir /drone/.npm/node_modules;
+        fi
+      - npm config set cache /drone/.npm/cache
+      - ln -s /drone/.npm/node_modules ./
+      ###
+      - npm config set loglevel warn
+      - npm install
+
+  rebuild-npm-cache:
+    image: foo/drone-volume-cache
+    rebuild: true
+    mount:
+      - /drone/.npm
+    volumes:
+      - /tmp/drone-volume-cache/npm:/cache
+
+  ###
+  # DEPLOYMENT STEP - fill in the details when set up
+  ###
+  # deploy:
+  #   image: tbd:latest
+
+services:
