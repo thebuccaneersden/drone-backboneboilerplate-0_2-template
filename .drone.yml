@@ -38,7 +38,7 @@ pipeline:
       # - npm i -gq grunt-cli bower coveralls casperjs phantomjs
       - npm i -gq grunt-cli bower coveralls
       # - npm install
-      - yarn install
+      - yarn install --ignore-engines
 
   rebuild-npm-cache:
     image: foo/drone-volume-cache
